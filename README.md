@@ -41,28 +41,28 @@ $  helm repo add stable https://kubernetes-charts.storage.googleapis.com
 $ helm repo update
 
 ```
-### 3- enable ingress
+### 4- enable ingress
 ```shell
 minikube addons enable ingress
 ```
 
-### 4- install nginx ingress controller:
+### 5- install nginx ingress controller:
 ```text
 helm install nginx-ingress stable/nginx-ingress --set controller.publishService.enabled=true
 ```
 
-### 5- Add minikube ip to your local DNS:
+### 6- Add minikube ip to your local DNS:
 ```text
 echo "$(minikube ip) local.gridscale.com" | sudo tee -a /etc/hosts
 ```
 :
-### 6- Install Skaffold
+### 7- Install Skaffold
 ```text
 https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64  -O /usr/local/bin/skaffold
 chmod +x  /usr/local/bin/skaffold
 ```
 
-### 7- Run Skaffold:
+### 8- Run Skaffold:
 ```text
 skaffold dev --namespace=gridscale --default-repo localhost:3200
 ```
@@ -83,13 +83,14 @@ When all pods are deployed and all the tasks are completely run you can see some
 [product-migrations-jjjvl product-migration]   No migrations to apply.
 [product-migrations-jjjvl product-migration] Installed 10000 object(s) from 1 fixture(s)
 ```
-### 8- Run import_runner script:
+### 9- Run import_runner script:
 After all pods are deployed, you can easily import the provided CSV database using **csv_import.py** script inside **import_runner** directory:
 ```css
 cd import_runner
 pip3 install requirements.txt
 python3.5 csv_import.py --csv orders.csv
 ```
+
 ## Endpoints:
 1. Customer Endpoint: 
 - Base: http://local.gridscale.com/customer/api/1.0/customer/
