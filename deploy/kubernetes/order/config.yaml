@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-config
+  namespace: gridscale
+data:
+  db_name: "db_order"

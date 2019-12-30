@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-config
+  namespace: gridscale
+data:
+  db_name: "db_product"

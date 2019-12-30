@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta7
+kind: Deployment
+metadata:
+  name: celery-beat
+  namespace: gridscale
+  labels:
+    app: celery-beat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: celery-beat
+  template:
+    metadata:
+      labels:
+        pod: celery-beat
+    spec:
+      containers:
+        - name: celery-beat
+          image: gitumarkk/k8_django_minikube:part_4
+          command: ['celery', '-A', 'kubernetes_django', 'beat', '-l', 'debug']
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+
+            - name: POSTGRES_HOST
+              value: postgres-service
+
+            - name: REDIS_HOST
+              value: redis-service

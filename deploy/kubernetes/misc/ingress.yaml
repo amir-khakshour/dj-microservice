@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: gridscale
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: local.gridscale.com  # Replace with the URL you want.
+      http:
+        paths:
+          - path: /product(/|$)(.*)
+            backend:
+              serviceName: product-service
+              servicePort: 8000
+          - path: /customer(/|$)(.*)
+            backend:
+              serviceName: customer-service
+              servicePort: 8000
+          - path: /order(/|$)(.*)
+            backend:
+              serviceName: order-service
+              servicePort: 8000

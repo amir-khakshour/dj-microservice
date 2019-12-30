@@ -1,8 +1,21 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-.pytest_cache/
-
-# Misc
-.idea
-db.sqlite3
+scratchpad
+.vscode
+.python-version
+*.code-workspace
+.coverage
+htmlcov/
+node_modules/
+package-lock.json
+*.ipynb
+.ipynb_checkpoints/
+wiki/
+backend/.coverage.*
+backend/celerybeat.pid
+backend/celerybeat-schedule
+.env
+.idea/
+.pytest_cache
+.~lock.*
+notes/
+.vscode

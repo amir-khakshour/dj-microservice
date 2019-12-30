@@ -1,0 +1,30 @@
+apiVersion: skaffold/v1beta7
+kind: Config
+build:
+  artifacts:
+    - image: gridscale/customer
+      context: services/customer/
+      docker:
+        dockerfile: scripts/dev/Dockerfile
+    - image: gridscale/product
+      context: services/product/
+      docker:
+        dockerfile: scripts/dev/Dockerfile
+    - image: gridscale/order
+      context: services/order/
+      docker:
+        dockerfile: scripts/dev/Dockerfile
+  tagPolicy:
+    gitCommit: {}
+  local:
+    useDockerCLI: true   # <<<<<
+deploy:
+  kubectl:
+    manifests:
+      - ./deploy/kubernetes/base/**.yaml
+      - ./deploy/kubernetes/redis/**.yaml
+      - ./deploy/kubernetes/postgres/**.yaml
+      - ./deploy/kubernetes/customer/**.yaml
+      - ./deploy/kubernetes/product/**.yaml
+      - ./deploy/kubernetes/order/**.yaml
+      - ./deploy/kubernetes/misc/**.yaml

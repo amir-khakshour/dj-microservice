@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: product-migrations
+  namespace: gridscale
+spec:
+  template:
+    spec:
+      containers:
+        - name: product-migration
+          image:  gridscale/product:1
+          command: ["sh", "./run_migrate.sh"]
+          env:
+            - name: REDIS_HOST
+              value: redis-service
+            - name: CELERY_BROKER_TRANSPORT
+              value: "redis"
+            - name: CELERY_BROKER_HOST
+              value: redis-service
+            - name: CELERY_BROKER_PORT
+              value: "6379"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: POSTGRES_HOST
+              value: postgres-service
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: product-config
+                  key: db_name
+      restartPolicy: Never
+  backoffLimit: 5

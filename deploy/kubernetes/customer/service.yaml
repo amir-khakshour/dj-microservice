@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: customer-service
+  namespace: gridscale
+spec:
+  selector:
+    pod: customer
+  ports:
+  - protocol: TCP
+    name: http
+    port: 8000
+    targetPort: 8000

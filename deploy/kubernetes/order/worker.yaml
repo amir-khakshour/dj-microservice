@@ -1,0 +1,48 @@
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: order-worker
+#  namespace: gridscale
+#  labels:
+#    app: django-worker
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: django-worker
+#  template:
+#    metadata:
+#      labels:
+#        app: django-worker
+#        pod: order-worker
+#    spec:
+#      containers:
+#        - name: order-worker
+#          image: gridscale/order:1
+#          command: ["celery", "worker", "--app=conf.celery_app:app", "--loglevel=info"]
+#          env:
+#            - name: POSTGRES_USER
+#              valueFrom:
+#                secretKeyRef:
+#                  name: postgres-credentials
+#                  key: user
+#            - name: POSTGRES_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: postgres-credentials
+#                  key: password
+#            - name: POSTGRES_HOST
+#              value: postgres-service
+#            - name: POSTGRES_DB
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: order-config
+#                  key: db_name
+#            - name: REDIS_HOST
+#              value: redis-service
+#            - name: CELERY_BROKER_TRANSPORT
+#              value: "redis"
+#            - name: CELERY_BROKER_HOST
+#              value: redis-service
+#            - name: CELERY_BROKER_PORT
+#              value: "6379"
